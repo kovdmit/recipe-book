@@ -1,0 +1,25 @@
+<nav aria-label="...">
+    <ul class="pager">
+        {% if page.has_previous %}
+            <li><a id="red" href="?page={{ page.previous_page_number }}"><span class="glyphicon glyphicon-menu-left"></span></a>
+            </li>
+        {% else %}
+            <li class="disabled"><span class="glyphicon glyphicon-menu-left"></span></li>
+        {% endif %}
+
+        {% for number in page.paginator.page_range %}
+            {% if page.number == number %}
+                <li class="disabled"><a>{{ page.number }}</a></li>
+            {% elif number > page.number|add:-3 and number < page.number|add:3 %}
+                <li><a id="red" class="page-numbers" href="?page={{ number }}">{{ number }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page.has_next %}
+            <li><a id="red" href="?page={{ page.next_page_number }}"><span class="glyphicon glyphicon-menu-right"></span></a>
+            </li>
+        {% else %}
+            <li class="disabled"><span class="glyphicon glyphicon-menu-right"></span></li>
+        {% endif %}
+    </ul>
+</nav>

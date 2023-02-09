@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block styles %}
+        <link href="{% static 'recipe/css/my.css' %}" rel="stylesheet">
+        <link href="{% static 'recipe/css/main.82cfd66e.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    {% endblock %}
+
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <meta content="Page description" name="description">
+    <meta name="google" content="notranslate"/>
+    <meta content="Mashup templates have been developped by Orson.io team" name="author">
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link href="./assets/apple-icon-180x180.png" rel="apple-touch-icon">
+    <link href="{% static 'recipe/img/favicon.ico' %}" rel="icon">
+
+    <title>{% block title %}NOT FOUND{% endblock %}</title>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        {% include 'inc/_nav.html' %}
+
+        <div class="col-md-2">
+            {% include 'inc/_sidebar.html' %}
+        </div>
+
+        <div class="col-md-9">
+
+            {% if tag != None %}
+                <div><h3 id="black">#{{ tag.name }}</h3><hr></div>
+            {% elif category != None %}
+                <div><h3 id="black">{{ category.title }}</h3><hr></div>
+            {% endif %}
+
+            {% block content %}
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                        {% else %}
+                        <div class="alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endblock %}
+        </div>
+
+        {% include 'recipe/ads/3.html' %}
+    </div>
+    {% include 'recipe/ads/2.html' %}
+</div>
+
+{% include 'inc/_scripts.html' %}
+</body>
+</html>

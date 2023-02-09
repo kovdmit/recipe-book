@@ -1,0 +1,34 @@
+{% load static %}
+{% load recipe_tags %}
+
+    <div class="site-header hidden-xs">
+        <a class="site-brand" href="{% url 'home' %}" title="">
+            <img class="img-responsive site-logo" alt="" src="{% static 'recipe/img/logo.png' %}" width="100"
+                 height="40">
+            Книга рецептов {% now "H:i:s" %}
+        </a>
+        <p>{% get_quote %}</p>
+        {% if not request.user.is_authenticated %}
+        <p id="blue">Зарегистрируйтесь, чтобы не видеть рекламу</p>
+        {% endif %}
+    </div>
+
+
+    {% include 'recipe/recipe/ads/1.html' %}
+
+
+    <p class="nav-footer-social-buttons">
+        <br>
+        <a class="fa-icon" href="https://www.instagram.com/kovdmit" title="">
+            <i class="fa fa-instagram"></i>
+        </a>
+        <a class="fa-icon" href="https://twitter.com/kovdmit" title="">
+            <i class="fa fa-twitter"></i>
+        </a>
+    </p>
+
+{#                <p>© Untitled | Website created with#}
+{#                    <a href="http://www.mashup-template.com/" title="Create website with free html template">Mashup Template</a>/#}
+{#                    <a href="https://www.unsplash.com/" title="Beautiful Free Images">Unsplash</a>#}
+{#                </p>#}
+

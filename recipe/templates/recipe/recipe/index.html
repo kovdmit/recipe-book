@@ -1,0 +1,48 @@
+{% extends 'recipe/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    {% if tag != None %}
+        #{{ tag.name }}
+    {% elif category != None %}
+        {{ category.title }}
+    {% else %}
+        {{ title }} | {% now "H:i:s" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="hero-full-wrapper">
+        <div class="grid">
+            <div class="gutter-sizer"></div>
+            <div class="grid-sizer"></div>
+            {% for item in posts %}
+                <div class="grid-item">
+                    {% if item.photo %}
+                        <img class="img-responsive" alt="" src="{{ item.photo.url }}">
+                    {% endif %}
+                    <a href="{{ item.get_absolute_url }}" class="project-description">
+                        <div class="project-text-holder">
+                            <div class="project-text-inner">
+                                <h3 id="black">{{ item.title }}</h3>
+                                {# <p>{{ item.short_desc }}</p> #}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if posts.has_other_pages %}
+        {% include 'recipe/pagination.html' with page=posts %}
+        {% elif page_obj.has_other_pages %}
+        {% include 'recipe/pagination.html' with page=page_obj %}
+    {% endif %}
+
+{#    {% if page_obj.has_other_pages %}#}
+{#        {% include 'recipe/pagination.html' with page=posts %}#}
+{#    {% endif %}#}
+
+{% endblock %}

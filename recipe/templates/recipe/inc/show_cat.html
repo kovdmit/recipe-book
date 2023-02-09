@@ -1,0 +1,4 @@
+{% for cat in all_cat %}
+    <li><a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
+{#                                <li role="separator" class="divider"></li>#}
+{% endfor %}

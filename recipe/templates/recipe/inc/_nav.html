@@ -1,0 +1,57 @@
+{% load recipe_tags %}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand и toggle сгруппированы для лучшего отображения на мобильных дисплеях -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'home' %}">Главная</a>
+            {% if request.user.is_superuser %}
+            <a class="navbar-brand" href="{% url 'admin:index' %}">Admin</a>
+            {% endif %}
+        </div>
+
+        <!-- Соберите навигационные ссылки, формы, и другой контент для переключения -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Категории<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        {% show_cat %}
+                    </ul>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'add_recipe' %}" title="">Добавить рецепт</a></li>
+                {% endif %}
+                {#navbar-form navbar-left#}
+            </ul>
+            <form class="navbar-form navbar-left" action="{% url 'search' %}" method="get">
+                <div class="form-group">
+                    <input type="text" name="s" class="form-control" placeholder="Я ищу...">
+                </div>
+                <button type="submit" class="btn btn-default">Найти</button>
+            </form>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'login' %}">Авторизация</a></li>
+                <li><a href="{% url 'register' %}" title="">Регистрация</a></li>
+                    {% else %}
+                    <li><a>Добро пожаловать, {{ user.username }} </a></li>
+                    <li><a href="{% url 'logout' %}">Выход</a></li>
+                {% endif %}
+                <li><a href="{% url 'about' %}" title="">О сайте</a></li>
+            </ul>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

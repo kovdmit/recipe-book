@@ -1,0 +1,66 @@
+{% extends 'recipe/base.html' %}
+{% load static %}
+
+
+{% block title %}{{ recipe_full.title }}{% endblock %}
+
+{% block content %}
+    <div>
+        <hr>
+        <h5><a href="{% url 'home' %}">Главная</a> → <a
+                href="{% url 'category_view' recipe_full.category.slug %}">{{ recipe_full.category }}</a>
+            → {{ recipe_full.title }}</h5>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+
+            <div class="section-container-spacer">
+                <h1>{{ recipe_full.title }}</h1>
+                <p>{{ recipe_full.short_desc|safe }}</p>
+            </div>
+
+            {% if recipe_full.photo %}
+                <div class="section-container-spacer">
+                    <p><img class="img-responsive" alt="" src="{{ recipe_full.photo.url }}"></p>
+                </div>
+            {% endif %}
+
+            <h3>Ингредиенты: </h3>
+            <p>{{ recipe_full.proportions|safe }}</p>
+            <h3>Пошаговый рецепт: </h3>
+            <p>{{ recipe_full.content|safe }}</p>
+            <p><i>Дата написания: {{ recipe_full.create_at }}</i></p>
+            <p><b>Автор: {{ recipe_full.author }}</b></p>
+            <p>Ключевые слова:
+                {% for tag in recipe_full.tags.all %}
+                    <a id="red" href="{% url 'tag_view' tag.pk %}">#{{ tag }}</a>
+                {% endfor %}
+            </p>
+
+
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Вам также может понравиться:</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        {% for item in similar_posts %}
+                            <div class="col-xs-6 col-md-4">
+                                <a href="{{ item.get_absolute_url }}" class="thumbnail">
+                                    <img src="{{ item.photo.url }}" alt="...">
+                                    <h4 class="text-center" id="black">{{ item.title }}</h4>
+                                </a>
+                            </div>
+                        {% empty %}
+                            <div class="text-center">Похожих рецептов нет</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+
